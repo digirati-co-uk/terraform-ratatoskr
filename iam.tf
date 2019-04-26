@@ -12,7 +12,7 @@ data "aws_iam_policy_document" "ratatoskr_exec_role" {
 }
 
 resource "aws_iam_role" "ratatoskr_exec_role" {
-  name               = "${var.prefix}-exec-role"
+  name               = "${var.prefix}-ratatoskr-exec-role"
   assume_role_policy = "${data.aws_iam_policy_document.ratatoskr_exec_role.json}"
 }
 
