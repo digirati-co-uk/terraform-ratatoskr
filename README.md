@@ -15,7 +15,7 @@ Terraform module for AWS Lambda function that communicates ECS deployment events
 
 ```
 module "ratatoskr" {
-  source = "git::https://github.com/digirati-co-uk/ratatoskr-terraform.git//"
+  source = "git::https://github.com/digirati-co-uk/terraform-ratatoskr.git//"
 
   prefix             = "${var.prefix}"
   slack_api_token    = "${var.ratatoskr_slack_api_token}"
