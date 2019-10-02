@@ -1,7 +1,8 @@
 resource "aws_cloudwatch_event_target" "ecs_ratatoskr" {
+  count     = "${length(var.source_package) > 0 ? 1 : 0}"
   target_id = "${var.prefix}-ecs-ratatoskr"
   rule      = "${aws_cloudwatch_event_rule.ecs.name}"
-  arn       = "${aws_lambda_function.ratatoskr.arn}"
+  arn       = "${local.lambda_function_arn}"
 }
 
 resource "aws_cloudwatch_event_rule" "ecs" {

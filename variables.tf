@@ -12,6 +12,17 @@ variable "slack_channel" {
 
 variable "source_package" {
   description = "Path of Lambda package zip"
+  default     = ""
+}
+
+variable "source_s3_bucket" {
+  description = "S3 bucket containing Lambda zip"
+  default     = ""
+}
+
+variable "source_s3_key" {
+  description = "S3 key of Lambda zip"
+  default     = ""
 }
 
 variable "included_clusters" {
