@@ -43,8 +43,8 @@ resource "aws_lambda_function" "ratatoskr_s3" {
 }
 
 locals {
-  lambda_function_name = "${length(var.source_package) > 0 ? aws_lambda_function.ratatoskr_file.function_name : aws_lambda_function.ratatoskr_s3.function_name}"
-  lambda_function_arn  = "${length(var.source_package) > 0 ? aws_lambda_function.ratatoskr_file.arn : aws_lambda_function.ratatoskr_s3.arn}"
+  lambda_function_name = "${element(concat(aws_lambda_function.ratatoskr_file.*.function_name, aws_lambda_function.ratatoskr_s3.*.function_name), 0)}"
+  lambda_function_arn  = "${element(concat(aws_lambda_function.ratatoskr_file.*.arn, aws_lambda_function.ratatoskr_s3.*.arn), 0)}"
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch_to_call_ratatoskr" {
