@@ -1,12 +1,12 @@
 resource "aws_lambda_function" "ratatoskr_file" {
-  count            = "${length(var.source_package) > 0 ? 1 : 0}"
+  count            = length(var.source_package) > 0 ? 1 : 0
   function_name    = "${var.prefix}-ratatoskr"
   handler          = "main.lambda_handler"
   runtime          = "python2.7"
-  filename         = "${var.source_package}"
-  source_code_hash = "${base64sha256(file(var.source_package))}"
+  filename         = var.source_package
+  source_code_hash = base64sha256(file(var.source_package))
 
-  role = "${aws_iam_role.ratatoskr_exec_role.arn}"
+  role = aws_iam_role.ratatoskr_exec_role.arn
 
   environment {
     variables = {
@@ -21,14 +21,14 @@ resource "aws_lambda_function" "ratatoskr_file" {
 }
 
 resource "aws_lambda_function" "ratatoskr_s3" {
-  count         = "${length(var.source_package) > 0 ? 0 : 1}"
+  count         = length(var.source_package) > 0 ? 0 : 1
   function_name = "${var.prefix}-ratatoskr"
   handler       = "main.lambda_handler"
   runtime       = "python2.7"
-  s3_bucket     = "${var.source_s3_bucket}"
-  s3_key        = "${var.source_s3_key}"
+  s3_bucket     = var.source_s3_bucket
+  s3_key        = var.source_s3_key
 
-  role = "${aws_iam_role.ratatoskr_exec_role.arn}"
+  role = aws_iam_role.ratatoskr_exec_role.arn
 
   environment {
     variables = {
@@ -43,14 +43,14 @@ resource "aws_lambda_function" "ratatoskr_s3" {
 }
 
 locals {
-  lambda_function_name = "${element(concat(aws_lambda_function.ratatoskr_file.*.function_name, aws_lambda_function.ratatoskr_s3.*.function_name), 0)}"
-  lambda_function_arn  = "${element(concat(aws_lambda_function.ratatoskr_file.*.arn, aws_lambda_function.ratatoskr_s3.*.arn), 0)}"
+  lambda_function_name = element(concat(aws_lambda_function.ratatoskr_file.*.function_name, aws_lambda_function.ratatoskr_s3.*.function_name), 0)
+  lambda_function_arn  = element(concat(aws_lambda_function.ratatoskr_file.*.arn, aws_lambda_function.ratatoskr_s3.*.arn), 0)
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch_to_call_ratatoskr" {
   statement_id  = "AllowExecutionFromCloudwatch"
   action        = "lambda:InvokeFunction"
-  function_name = "${local.lambda_function_name}"
+  function_name = local.lambda_function_name
   principal     = "events.amazonaws.com"
-  source_arn    = "${aws_cloudwatch_event_rule.ecs.arn}"
+  source_arn    = aws_cloudwatch_event_rule.ecs.arn
 }

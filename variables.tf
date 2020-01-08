@@ -32,5 +32,5 @@ variable "included_clusters" {
 
 variable "tags" {
   description = "Map of tags to apply to AWS resources"
-  type        = "map"
+  type        = map
 }

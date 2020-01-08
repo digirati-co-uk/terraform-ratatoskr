@@ -13,11 +13,11 @@ data "aws_iam_policy_document" "ratatoskr_exec_role" {
 
 resource "aws_iam_role" "ratatoskr_exec_role" {
   name               = "${var.prefix}-ratatoskr-exec-role"
-  assume_role_policy = "${data.aws_iam_policy_document.ratatoskr_exec_role.json}"
+  assume_role_policy = data.aws_iam_policy_document.ratatoskr_exec_role.json
 }
 
 resource "aws_iam_role_policy_attachment" "ratatoskr_logging" {
-  role       = "${aws_iam_role.ratatoskr_exec_role.name}"
+  role       = aws_iam_role.ratatoskr_exec_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
@@ -63,6 +63,6 @@ data "aws_iam_policy_document" "ratatoskr_abilities" {
 
 resource "aws_iam_role_policy" "ratatoskr_abilities" {
   name   = "${var.prefix}-ratatoskr"
-  role   = "${aws_iam_role.ratatoskr_exec_role.name}"
-  policy = "${data.aws_iam_policy_document.ratatoskr_abilities.json}"
+  role   = aws_iam_role.ratatoskr_exec_role.name
+  policy = data.aws_iam_policy_document.ratatoskr_abilities.json
 }

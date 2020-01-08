@@ -55,5 +55,5 @@ resource "aws_dynamodb_table" "ratatoskr_task_digest" {
   read_capacity  = 2
   write_capacity = 2
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
