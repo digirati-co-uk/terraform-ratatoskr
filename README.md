@@ -58,7 +58,7 @@ module "ratatoskr" {
 
 This assumes the use of the Python application at https://github.com/digirati-co-uk/ecs-slack-notifications which is a fork of https://github.com/Fullscreen/ecs-slack-notifications with a change or two added (also MIT license).
 
-- Ensure Python 2.7 and `pip` installed
+- Ensure Python 3.9 and `pip` installed
 - Clone repo
 - Change to repo folder
 ```
