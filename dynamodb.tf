@@ -15,7 +15,7 @@ resource "aws_dynamodb_table" "ratatoskr_instance_state" {
   read_capacity  = 2
   write_capacity = 2
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
 
 resource "aws_dynamodb_table" "ratatoskr_task_state" {
@@ -35,7 +35,7 @@ resource "aws_dynamodb_table" "ratatoskr_task_state" {
   read_capacity  = 2
   write_capacity = 2
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
 
 resource "aws_dynamodb_table" "ratatoskr_task_digest" {
@@ -55,5 +55,5 @@ resource "aws_dynamodb_table" "ratatoskr_task_digest" {
   read_capacity  = 2
   write_capacity = 2
 
-  tags = "${var.tags}"
+  tags = var.tags
 }
