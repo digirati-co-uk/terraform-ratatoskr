@@ -2,7 +2,7 @@ resource "aws_lambda_function" "ratatoskr_file" {
   count            = "${length(var.source_package) > 0 ? 1 : 0}"
   function_name    = "${var.prefix}-ratatoskr"
   handler          = "main.lambda_handler"
-  runtime          = "python2.7"
+  runtime          = "python3.9"
   filename         = "${var.source_package}"
   source_code_hash = "${base64sha256(file(var.source_package))}"
 
@@ -24,7 +24,7 @@ resource "aws_lambda_function" "ratatoskr_s3" {
   count         = "${length(var.source_package) > 0 ? 0 : 1}"
   function_name = "${var.prefix}-ratatoskr"
   handler       = "main.lambda_handler"
-  runtime       = "python2.7"
+  runtime       = "python3.9"
   s3_bucket     = "${var.source_s3_bucket}"
   s3_key        = "${var.source_s3_key}"
 
