@@ -33,4 +33,16 @@ variable "included_clusters" {
 variable "tags" {
   description = "Map of tags to apply to AWS resources"
   type        = map(string)
+  default     = {}
+}
+
+variable "runtime" {
+  description = "Python runtime to use for lambda"
+  type        = string
+  default     = "python3.12"
+
+  validation {
+    condition     = substr(var.runtime, 0, 6) == "python"
+    error_message = "The runtime must start with \"python\"."
+  }
 }
